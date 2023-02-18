@@ -10,7 +10,7 @@ import smtplib
 import random
 import pywhatkit as kit
 import sys
-import time
+import time #time library
 import pyjokes
 from requests import get
 
