@@ -4,7 +4,9 @@ import datetime
 import wikipedia  
 import webbrowser
 import os
+import cv2 #camera library
 import smtplib
+# import random
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -31,15 +33,13 @@ def wishMe():
     speak("Sir, I am Cipher. Please tell me how may I help you")
 
 
-def takeCommand():
-    # It takes microphone input from the user and returns string output
+def takeCommand():  
 
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
-        r.pause_threshold = 0.8
+        r.pause_threshold = 1
         audio = r.listen(source)
-
     try:
         print("Recognizing...")
         query = r.recognize_google(audio, language='en-in')
@@ -64,7 +64,7 @@ def sendEmail(to, content):
 if __name__ == "__main__":
     wishMe()
     while True:
-        # if 1:
+    # if 1:
         query = takeCommand().lower()
 
         # Logic for executing tasks based on query
@@ -86,13 +86,12 @@ if __name__ == "__main__":
             webbrowser.open("stackoverflow.com")
 
         elif 'play music' in query:
-            music_dir = 'D:\\Non Critical\\songs\\Favorite Songs2'
+            music_dir = 'D:\\cipher\\music'
             songs = os.listdir(music_dir)
             print(songs)
             os.startfile(os.path.join(music_dir, songs[0]))
 
-        elif 'do you know divyansh' in query:
-            speak(f"Divyansh is number one bullshit guy in this world")
+        
             
 
         elif 'the time' in query:
@@ -102,6 +101,23 @@ if __name__ == "__main__":
         elif 'open code' in query:
             codePath = "C:\\Users\\Haris\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
+
+        elif 'open notepad' in query:
+            codePath = "C:\\Program Files\\WindowsApps\\Microsoft.WindowsNotepad_11.2210.5.0_x64__8wekyb3d8bbwe\\Notepad\\Notepad.exe"
+            os.startfile(codePath)
+        elif "open command prompt" in query:
+            os.system("start cmd")
+        
+        elif "open camera" in query:
+            cap=cv2.VideoCapture(0)
+            while True:
+                ret, img =cap.read()
+                cv2.imshow('webcam', img)
+                k= cv2.waitKey(100)
+                if k==27:
+                    break;
+                cap.release()
+                cv2.destroyAllWindows()
 
         elif 'email to abhishek' in query:
             try:
