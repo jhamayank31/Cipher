@@ -1,11 +1,11 @@
 
-import pyttsx3  #pip install pyttsx3
-import speech_recognition as sr  
+import pyttsx3  # pip install pyttsx3
+import speech_recognition as sr
 import datetime
-import wikipedia  
+import wikipedia
 import webbrowser
 import os
-import cv2 #camera library
+import cv2  # camera library
 import smtplib
 import random
 import pywhatkit as kit
@@ -13,7 +13,6 @@ import sys
 import time
 import pyjokes
 from requests import get
-
 
 
 engine = pyttsx3.init('sapi5')
@@ -41,8 +40,10 @@ def wishMe():
 
     speak("Sir, I am Cipher. Please tell me how may I help you")
 
-#to convert voice into text 
-def takeCommand():  
+# to convert voice into text
+
+
+def takeCommand():
 
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -60,7 +61,9 @@ def takeCommand():
         return "None"
     return query
 
-#to send email
+# to send email
+
+
 def sendEmail(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
@@ -76,7 +79,6 @@ if __name__ == "__main__":
     # if 1:
         query = takeCommand().lower()
 
-        
         if 'wikipedia' in query:
             speak('Searching Wikipedia...')
             query = query.replace("wikipedia", "")
@@ -87,12 +89,14 @@ if __name__ == "__main__":
 
         elif 'youtube' in query:
             webbrowser.open("youtube.com")
+        elif 'youtube' in query:
+            webbrowser.open("instagram.com")
 
-        elif 'google' in query:
+        elif 'browser' in query:
             webbrowser.open("google.com")
 
         elif 'stackoverflow' in query:
-            webbrowser.open("stackoverflow.com")
+            webbrowser.open("stack overflow.com")
 
         elif 'play music' in query:
             music_dir = 'D:\\cipher\\music'
@@ -100,8 +104,9 @@ if __name__ == "__main__":
             print(songs)
             os.startfile(os.path.join(music_dir, songs[0]))
 
-        
-            
+        elif "ip adress" in query:
+            ip = get('https://api.ipify.org').text
+            speak(f"your IP adress is {ip}")
 
         elif 'the time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
@@ -116,15 +121,15 @@ if __name__ == "__main__":
             os.startfile(codePath)
         elif "open command prompt" in query:
             os.system("start cmd")
-        
+
         elif "open camera" in query:
-            cap=cv2.VideoCapture(0)
+            cap = cv2.VideoCapture(0)
             while True:
-                ret, img =cap.read()
+                ret, img = cap.read()
                 cv2.imshow('webcam', img)
-                k= cv2.waitKey(100)
-                if k==27:
-                    break;
+                k = cv2.waitKey(100)
+                if k == 27:
+                    break ;
                 cap.release()
                 cv2.destroyAllWindows()
 
@@ -139,31 +144,44 @@ if __name__ == "__main__":
                 print(e)
                 speak("Sorry my friend Abhishek. I am not able to send this email")
 
+        elif "open google" in query:
+            speak("sir, what should i search on google")
+            cm = takeCommand().lower()
+            webbrowser.open(f"{cm}")
 
-#to close applications
+        
+# to close applications
 
         elif "close notepad" in query:
             speak("okay sir, closing notepad")
             os.system("taskkill/f /im notepad.exe")
 
-#to set an alarm
+# to set an alarm
         elif "setb alarm" in query:
             nn = int(datetime.datetime.now().hour)
-            if nn==22:
+            if nn == 22:
                 music_dir = 'E:\\music'
                 songs = os.listdir(music_dir, songs[0])
 
-#to find a joke
+# to find a joke
         elif "tell me a joke" in query:
             joke = pyjokes.get_joke()
             speak(joke)
 
-#           
-        elif "shut down the system" in query:
-            os.system("shutdown /r /t S")
+        elif "shutdown the system" in query:
+            speak("Are You sure you want to shutdown")
+            shutdown = input("Do you wish to shutdown your computer? (yes/no)")
+            if shutdown == "yes":
+                os.system("shutdown /s /t 1")
+            elif shutdown == "no":
+             break
 
         elif "restart the system" in query:
             os.system("shutdown /r /t S")
 
         elif "sleep the system" in query:
             os.system("rund1132.exe powrprof.dll,SetSuspendState 0,1,0")
+
+        elif "whatsapp" in query:
+            from whatsapp import sendMessage
+            sendMessage()
