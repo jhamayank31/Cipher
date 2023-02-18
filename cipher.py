@@ -6,7 +6,14 @@ import webbrowser
 import os
 import cv2 #camera library
 import smtplib
-# import random
+import random
+import pywhatkit as kit
+import sys
+import time
+import pyjokes
+from requests import get
+
+
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -16,6 +23,7 @@ engine.setProperty('voice', voices[0].id)
 
 def speak(audio):
     engine.say(audio)
+    print(audio)
     engine.runAndWait()
 
 
@@ -32,7 +40,7 @@ def wishMe():
 
     speak("Sir, I am Cipher. Please tell me how may I help you")
 
-
+#to convert voice into text 
 def takeCommand():  
 
     r = sr.Recognizer()
@@ -51,7 +59,7 @@ def takeCommand():
         return "None"
     return query
 
-
+#to send email
 def sendEmail(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
@@ -129,3 +137,32 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 speak("Sorry my friend Abhishek. I am not able to send this email")
+
+
+#to close applications
+
+        elif "close notepad" in query:
+            speak("okay sir, closing notepad")
+            os.system("taskkill/f /im notepad.exe")
+
+#to set an alarm
+        elif "setb alarm" in query:
+            nn = int(datetime.datetime.now().hour)
+            if nn==22:
+                music_dir = 'E:\\music'
+                songs = os.listdir(music_dir, songs[0])
+
+#to find a joke
+        elif "tell me a joke" in query:
+            joke = pyjokes.get_joke()
+            speak(joke)
+
+#           
+        elif "shut down the system" in query:
+            os.system("shutdown /r /t S")
+
+        elif "restart the system" in query:
+            os.system("shutdown /r /t S")
+
+        elif "sleep the system" in query:
+            os.system("rund1132.exe powrprof.dll,SetSuspendState 0,1,0")
