@@ -4,7 +4,7 @@ import speech_recognition as sr
 import datetime
 import wikipedia
 import webbrowser
-import os
+import os # ffggggg
 import cv2  # camera library
 import smtplib
 import random
